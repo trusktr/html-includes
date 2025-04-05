@@ -7,7 +7,7 @@ allowing for out-of-the-box organization of HTML code.
 
 # Discussion
 
-[Web Components Discord](https://discord.gg/PZH8ucFHp2).
+[Web Components Discord](https://discord.gg/PZH8ucFHp2)
 
 # Pseudo Polyfill
 
