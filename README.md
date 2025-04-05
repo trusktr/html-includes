@@ -216,12 +216,9 @@ Before describing the benefits of HTML Includes, let's first talk about the work
 - CSS and JS both already have a way to organize code in separate files with
   `@import`, `<script type="module">` and `import`, and `<script>`. Now HTML would
   finally be up to par.
-
-# Use cases besides code organization
-
-- Organizing code without JavaScript so that a website still has essential
-  functionality when JavaScript is disabled, still without needing frameworks or
-  build tools.
+- Ability to organize code without JavaScript, so that a website still has
+  essential functionality even when JavaScript is disabled, still without needing
+  frameworks, build tools, or dynamic backends.
 
 # Future Benefits
 
