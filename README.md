@@ -3,9 +3,9 @@
 An ultra simple proposal to allow composition of HTML files in web browsers,
 allowing for out-of-the-box organization of HTML code.
 
-# Pseudo Polyfill
-
 [Live example](https://trusktr.github.io/html-includes/)
+
+# Pseudo Polyfill
 
 See `index.html`.
 
