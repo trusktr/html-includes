@@ -1,0 +1,9 @@
+{
+	"type": "module",
+	"scripts": {
+		"start": "five-server ."
+	},
+	"devDependencies": {
+		"five-server": "^0.4.1"
+	}
+}

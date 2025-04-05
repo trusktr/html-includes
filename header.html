@@ -1,0 +1,36 @@
+<style>
+	html,
+	body {
+		margin: 0;
+		font-family: sans-serif;
+	}
+
+	header {
+		background: #f0f0f0;
+		padding: 10px;
+		border-bottom: 1px solid #ccc;
+
+		nav {
+			display: flex;
+			gap: 15px;
+		}
+	}
+
+	main {
+		padding: 10px;
+	}
+</style>
+
+<header>
+	<h1>My Site</h1>
+
+	<nav>
+		<a href="index.html">Home</a>
+		<a href="page1.html">Page 1</a>
+		<a href="page2.html">Page 2</a>
+	</nav>
+</header>
+
+<script>
+	console.log(`This is the ${location.pathname} page.`)
+</script>
