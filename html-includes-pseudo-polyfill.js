@@ -1,7 +1,7 @@
 {
 	class HTMLLinkElement extends HTMLElement {
 		connectedCallback() {
-			if (this.rel === 'html') {
+			if (this.rel === 'include') {
 				// Use a benign insertion point for where to insert the HTML
 				// content so that the <link> is not visible (including to any
 				// inserted scripts or custom elements).

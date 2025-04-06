@@ -17,8 +17,8 @@ Run `npm clean-install && npm start` (or start any local static server of your
 choosing) to try the example locally.
 
 > [!Note]
-> It's a "pseudo polyfill" because an `<x-link rel="html">` custom element is used
-> in place of `<link rel="html">` to demo the desired feature behavior. As far as
+> It's a "pseudo polyfill" because an `<x-link rel="include">` custom element is used
+> in place of `<link rel="include">` to demo the desired feature behavior. As far as
 > I'm aware, it is not possible to implement a synchronous polyfill (especially
 > after the removal of DOM Mutation Events).
 
@@ -134,7 +134,7 @@ and then import it into any other files that need it. Here are the updated
 ```html
 <!-- example.com/page1.html -->
 <body>
-  <link rel="html" href="./header.html" />
+  <link rel="include" href="./header.html" />
 
   <p>This is some page1 content.</p>
 </body>
@@ -143,7 +143,7 @@ and then import it into any other files that need it. Here are the updated
 ```html
 <!-- example.com/page2.html -->
 <body>
-  <link rel="html" href="./header.html" />
+  <link rel="include" href="./header.html" />
 
   <p>This is some page2 content.</p>
 </body>
@@ -153,7 +153,7 @@ The `header.html` file could later be updated to further include content from an
 
 ```html
 <!-- example.com/header.html -->
-<link rel="html" href="awesome-header.com/styles.css" />
+<link rel="include" href="awesome-header.com/styles.css" />
 
 <style>
   #header {
@@ -231,7 +231,7 @@ Before describing the benefits of HTML Includes, let's first talk about the work
     ```html
     <!-- example.com/page1.html -->
     <body>
-      <link rel="html" href="./header.html" />
+      <link rel="include" href="./header.html" />
 
       <!-- some-option is used for page1 -->
       <my-header some-option="doit"></my-header>
@@ -243,7 +243,7 @@ Before describing the benefits of HTML Includes, let's first talk about the work
     ```html
     <!-- example.com/page2.html -->
     <body>
-      <link rel="html" href="./header.html" />
+      <link rel="include" href="./header.html" />
 
       <!-- some-option is not used for page2 -->
       <my-header></my-header>
@@ -258,7 +258,7 @@ Before describing the benefits of HTML Includes, let's first talk about the work
     <customelement tag="my-header" shadowroot="open">
       <attribute name="some-option" prop />
 
-      <link rel="html" href="awesome-header.com/styles.css" />
+      <link rel="include" href="awesome-header.com/styles.css" />
 
       <style>
         #header {
@@ -300,7 +300,7 @@ Before describing the benefits of HTML Includes, let's first talk about the work
 - Secure HTML delivered provided by the end users of a website. This would allow, for example,
   users to specify HTML for content (such as user profiles on a social network
   site that allows customized profiles (remember MySpace?)).
-  - A special attribute could disable JS, global-modifying elements like `<base>`, enable style scoping via ShadowDOM, and enable strict css containment: `<link rel="html" href="./user/123.html" isolated>`
+  - A special attribute could disable JS, global-modifying elements like `<base>`, enable style scoping via ShadowDOM, and enable strict css containment: `<link rel="include" href="./user/123.html" isolated>`
     - For example if JS or other forbidden items are included, an error or warning is shown
       in console (or nothing at all, but messages are helpful), and those items are
       effectively removed and have no impact.
@@ -355,7 +355,7 @@ This example,
 
 ```html
 <!-- index.html -->
-<link rel="html" href="./hello.html" />
+<link rel="include" href="./hello.html" />
 <p>content</p>
 ```
 
@@ -411,7 +411,7 @@ would be as similar as possible to having written a single file like this:
   ```html
   <!-- index.html -->
   <body>
-    <link rel="html" href="./stuff.html" />
+    <link rel="include" href="./stuff.html" />
     <my-el name="Joe"></my-el>
   </body>
   ```
@@ -479,7 +479,7 @@ There are various ways to make the HTML interface:
 
 ```html
 <!-- Add the functionality to the <link> element? This would align with the existing way that style sheets are "included" -->
-<link rel="html" href="./header.html" />
+<link rel="include" href="./header.html" />
 
 <!-- Or make a new element for it? -->
 <include src="./header.html" />

@@ -38,29 +38,24 @@
 </style>
 
 <header>
-	<h1>My Site</h1>
+	<h1>HTML Includes Example</h1>
 
 	<nav>
-		<a href="index.html">Home</a>
+		<a href="/">Home</a>
 		<a href="page1.html">Page 1</a>
 		<a href="page2.html">Page 2</a>
 	</nav>
 </header>
 
 <script>
+	// add an active class to the current link for the current page
 	{
-		// add active class to the current link for the current page
-		const links = document.querySelectorAll('header nav a')
+		const links = Array.from(document.querySelectorAll('header nav a'))
 		const currentPath = window.location.pathname
 
-		links.forEach(link => {
-			// get the href attribute of the link
+		for (const link of links) {
 			const href = link.getAttribute('href')
-
-			// compare with the current path
-			if (currentPath.includes(href)) {
-				link.classList.add('active') // add active class to the current link
-			}
-		})
+			if (currentPath.endsWith(href)) link.classList.add('active')
+		}
 	}
 </script>
