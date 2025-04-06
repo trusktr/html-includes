@@ -14,6 +14,22 @@
 			display: flex;
 			gap: 15px;
 		}
+
+		a {
+			font-weight: bold;
+			color: black;
+			text-decoration: none;
+
+			&.active {
+				/* Highlight the active link */
+				color: #007bff;
+				text-decoration: underline;
+			}
+
+			&:active {
+				color: black;
+			}
+		}
 	}
 
 	main {
@@ -32,5 +48,19 @@
 </header>
 
 <script>
-	console.log(`This is the ${location.pathname} page.`)
+	{
+		// add active class to the current link for the current page
+		const links = document.querySelectorAll('header nav a')
+		const currentPath = window.location.pathname
+
+		links.forEach(link => {
+			// get the href attribute of the link
+			const href = link.getAttribute('href')
+
+			// compare with the current path
+			if (currentPath.includes(href)) {
+				link.classList.add('active') // add active class to the current link
+			}
+		})
+	}
 </script>
