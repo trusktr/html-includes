@@ -1,7 +1,29 @@
 <script src="./html-includes-pseudo-polyfill.js"></script>
 
-<x-link rel="include" href="./header.html"></x-link>
+<x-template inlined src="./header.html"></x-template>
 
 <main>
 	<p>This is the home page.</p>
+
+	<!-- test <x-template shadowrootmode> -->
+	<script type="module">
+		customElements.define(
+			'x-x',
+			class extends HTMLElement {
+				constructor() {
+					super()
+					const internals = this.attachInternals()
+					console.log(internals.shadowRoot)
+					console.log(this.shadowRoot)
+					if (!internals.shadowRoot) this.attachShadow({mode: 'open'})
+				}
+			},
+		)
+	</script>
+	<x-x foo="bar" baz="qux">
+		<!-- <x-template shadowrootmode="open"><slot></slot></x-template> -->
+		<template shadowrootmode="open"><slot></slot></template>
+
+		<p>Lorem ipsum.</p>
+	</x-x>
 </main>

@@ -1,7 +1,9 @@
 <script src="./html-includes-pseudo-polyfill.js"></script>
 
-<x-link rel="include" href="./header.html"></x-link>
+<x-template inlined src="./header.html"></x-template>
 
 <main>
 	<p>This is page 1.</p>
+
+	<x-template shadowrootmode="open"><slot></slot></x-template>
 </main>

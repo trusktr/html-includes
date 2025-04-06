@@ -17,8 +17,8 @@ Run `npm clean-install && npm start` (or start any local static server of your
 choosing) to try the example locally.
 
 > [!Note]
-> It's a "pseudo polyfill" because an `<x-link rel="include">` custom element is used
-> in place of `<link rel="include">` to demo the desired feature behavior. As far as
+> It's a "pseudo polyfill" because an `<x-template inlined src="...">` custom element is used
+> in place of native `<template>` to demo the desired feature behavior. As far as
 > I'm aware, it is not possible to implement a synchronous polyfill (especially
 > after the removal of DOM Mutation Events).
 
@@ -134,7 +134,7 @@ and then import it into any other files that need it. Here are the updated
 ```html
 <!-- example.com/page1.html -->
 <body>
-  <link rel="include" href="./header.html" />
+  <template inlined src="./header.html"></template>
 
   <p>This is some page1 content.</p>
 </body>
@@ -143,7 +143,7 @@ and then import it into any other files that need it. Here are the updated
 ```html
 <!-- example.com/page2.html -->
 <body>
-  <link rel="include" href="./header.html" />
+  <template inlined src="./header.html"></template>
 
   <p>This is some page2 content.</p>
 </body>
@@ -153,7 +153,7 @@ The `header.html` file could later be updated to further include content from an
 
 ```html
 <!-- example.com/header.html -->
-<link rel="include" href="awesome-header.com/styles.css" />
+<template inlined src="awesome-header.com/styles.css"></template>
 
 <style>
   #header {
@@ -231,7 +231,7 @@ Before describing the benefits of HTML Includes, let's first talk about the work
     ```html
     <!-- example.com/page1.html -->
     <body>
-      <link rel="include" href="./header.html" />
+      <template inlined src="./header.html"></template>
 
       <!-- some-option is used for page1 -->
       <my-header some-option="doit"></my-header>
@@ -243,7 +243,7 @@ Before describing the benefits of HTML Includes, let's first talk about the work
     ```html
     <!-- example.com/page2.html -->
     <body>
-      <link rel="include" href="./header.html" />
+      <template inlined src="./header.html"></template>
 
       <!-- some-option is not used for page2 -->
       <my-header></my-header>
@@ -258,7 +258,7 @@ Before describing the benefits of HTML Includes, let's first talk about the work
     <customelement tag="my-header" shadowroot="open">
       <attribute name="some-option" prop />
 
-      <link rel="include" href="awesome-header.com/styles.css" />
+      <template inlined src="awesome-header.com/styles.css"></template>
 
       <style>
         #header {
@@ -300,7 +300,7 @@ Before describing the benefits of HTML Includes, let's first talk about the work
 - Secure HTML delivered provided by the end users of a website. This would allow, for example,
   users to specify HTML for content (such as user profiles on a social network
   site that allows customized profiles (remember MySpace?)).
-  - A special attribute could disable JS, global-modifying elements like `<base>`, enable style scoping via ShadowDOM, and enable strict css containment: `<link rel="include" href="./user/123.html" isolated>`
+  - A special attribute could disable JS, global-modifying elements like `<base>`, enable style scoping via ShadowDOM, and enable strict css containment: `<template inlined src="./user/123.html" isolated>`
     - For example if JS or other forbidden items are included, an error or warning is shown
       in console (or nothing at all, but messages are helpful), and those items are
       effectively removed and have no impact.
@@ -355,7 +355,7 @@ This example,
 
 ```html
 <!-- index.html -->
-<link rel="include" href="./hello.html" />
+<template inlined src="./hello.html"></template>
 <p>content</p>
 ```
 
@@ -402,7 +402,7 @@ would be as similar as possible to having written a single file like this:
   <customelement tag="my-el">
     ... element definition ...
 
-    <template inlined shadowroot="open"> Name: {{name}} </template>
+    <template shadowroot="open"> Name: {{name}} </template>
   </customelement>
 
   <template inlined> some value: {{value}} </template>
@@ -411,7 +411,7 @@ would be as similar as possible to having written a single file like this:
   ```html
   <!-- index.html -->
   <body>
-    <link rel="include" href="./stuff.html" />
+    <template inlined src="./stuff.html"></template>
     <my-el name="Joe"></my-el>
   </body>
   ```
@@ -448,19 +448,19 @@ would be as similar as possible to having written a single file like this:
    1. Do we replace the include elements (whether `<link>`, `<include>` or
       something else, see below) with their content, so the end result is simply
       the DOM as it would have been written if everything were inline?
-   1. Or do we leave the element there, with user agent `display:contents` styling, and
-      append the included content as children of the element (this might not work with
-      `<link>`, but a new `<include>` element could have this feature, some bike shedding
-      below).
+   1. Or do we leave the element there, with user agent `display:contents`
+      styling, and append the included content as children of the element (this
+      might not work with `<link>` elements because they are void elements, but a
+      new `<include>` element could have this feature, some bike shedding below).
       - This would be similar to how `<template shadowroot>` is replaced with a `ShadowRoot`.
       - Would it make sense then to add a new `<template include="./foo.html">` that
         similarly removes itself? (some bike shedding below)
-   1. Or do we not replace or append to children, and instead provide a new properly
-      in the include element (whether `<link>`, `<include>` or something else) for
-      accessing the included DOM (and APIs like `document.querySelector` are updated
-      so that they include finding references via this new property, and unlike with
-      ShadowDOM this new property would not block such APIs from seeing included
-      elements)?
+   1. Or do we not replace or append to children, and instead provide a new
+      properly in the include element (whether `<link>`, `<include>`, `<template src>`,
+      or something else) for accessing the included DOM (and APIs like
+      `document.querySelector` are updated so that they include finding references
+      via this new property, and unlike with ShadowDOM this new property would not
+      block such APIs from seeing included elements)?
       - f.e. `el.included` could be a `NodeList`.
 2. What cross-origin security semantics are needed?
    - Because the HTML Includes in its simplest form should be effectively the
@@ -479,7 +479,7 @@ There are various ways to make the HTML interface:
 
 ```html
 <!-- Add the functionality to the <link> element? This would align with the existing way that style sheets are "included" -->
-<link rel="include" href="./header.html" />
+<link rel="include" src="./header.html" />
 
 <!-- Or make a new element for it? -->
 <include src="./header.html" />
@@ -487,10 +487,10 @@ There are various ways to make the HTML interface:
 <!-- Or augment the template interface? This might be tricky, as there are
 already multiple ways to use a <template>.
     
-For type safe environments (JSX, Vue, Svelte, etc) it is nicer from a developer
+For type safe environments (JSX, Vue, Svelte, etc) it can be considered nicer from a developer
 experience perspective to have separate elements with their own
 attributes/props, as a logical organizational unit, and the following approach
-(or the <link> approach) does not fit nicely with that idea. 
+(or the <link> approach) may not fit as nicely with that idea. 
 
 This can also conflict with future ideas like template binding syntax (we would
 then have to answer the question how does binding work on a template that also
@@ -498,6 +498,8 @@ includes?). Perhaps it is better to keep those features separated, and people
 can put `<template>`s in separate HTML files instead of HTML files also being
 templates. -->
 <template include="./header.html"></template>
+<!-- or -->
+<template inlined src="./header.html"></template>
 ```
 
 Why don't we have `<style src>` like `<script src>`? The following would bring
