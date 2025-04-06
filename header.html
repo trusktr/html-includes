@@ -41,21 +41,21 @@
 	<h1>HTML Includes Example</h1>
 
 	<nav>
-		<a href="/">Home</a>
-		<a href="page1.html">Page 1</a>
-		<a href="page2.html">Page 2</a>
+		<a href="./">Home</a>
+		<a href="./page1.html">Page 1</a>
+		<a href="./page2.html">Page 2</a>
 	</nav>
 </header>
 
 <script>
 	// add an active class to the current link for the current page
 	{
+		const lastPathPart = window.location.pathname.split('/').pop()
 		const links = Array.from(document.querySelectorAll('header nav a'))
-		const currentPath = window.location.pathname
 
 		for (const link of links) {
-			const href = link.getAttribute('href')
-			if (currentPath.endsWith(href)) link.classList.add('active')
+			const lastHrefPart = link.getAttribute('href').split('/').pop()
+			if (lastPathPart === lastHrefPart) link.classList.add('active')
 		}
 	}
 </script>
